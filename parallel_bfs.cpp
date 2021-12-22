@@ -1,9 +1,11 @@
+#include <chrono>
 #include <CL/sycl.hpp>
 #include <vector>
 #include <CL/sycl/INTEL/fpga_extensions.hpp>
 
 using namespace sycl;
 using namespace std;
+using namespace chrono;
 
 #include "dpc_common.hpp"
 #include <iostream>
@@ -43,6 +45,7 @@ vector<vector<int>> create_graph(string filename)
         int end = edges.at(i).m;
         graph[start].push_back(end);
     }
+    std::cout << "graph created" << std::endl;
 
     return graph;
 }
@@ -101,7 +104,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
         // iterate over the frontier, update node parents
 
-        h.single_task([=]() {
+        h.single_task([=]() [[intel::kernel_args_restrict]] {
             bool all_nodes_visited = false;
             for (int iteration = 0; iteration < nodes && !all_nodes_visited; iteration++)
             {
@@ -112,8 +115,11 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
                     {
                         for (auto &neighbor : graph_access[i])
                         {
-                            parents_access[neighbor] = i;
-                            next_frontier_access[neighbor] = 1;
+                            if (parents_access[neighbor] == -1)
+                            {
+                                parents_access[neighbor] = i;
+                                next_frontier_access[neighbor] = 1;
+                            }
                         }
                     }
                 }
@@ -148,9 +154,10 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
 int main()
 {
-    vector<vector<int>> graph = create_graph("soc-LiveJournal1.txt");
+    vector<vector<int>> graph = create_graph("artist_edges.csv");
     vector<int> parallel_result = parallel_bfs(graph);
-    //vector<int> sequential_result = sequential_bfs(graph);
+    auto start = high_resolution_clock::now();
+
     for (int i = 0; i < parallel_result.size(); i++)
     {
         int parent = parallel_result[i];
