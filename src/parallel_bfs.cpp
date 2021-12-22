@@ -45,7 +45,6 @@ vector<vector<int>> create_graph(string filename)
         int end = edges.at(i).m;
         graph[start].push_back(end);
     }
-    std::cout << "graph created" << std::endl;
 
     return graph;
 }
@@ -154,7 +153,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
 int main()
 {
-    vector<vector<int>> graph = create_graph("artist_edges.csv");
+    vector<vector<int>> graph = create_graph("./src/artist_edges.csv");
     vector<int> parallel_result = parallel_bfs(graph);
     auto start = high_resolution_clock::now();
 
