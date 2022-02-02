@@ -13,7 +13,7 @@ using namespace chrono;
 #include <string>
 #include "sequential_bfs.h"
 
-const int N = 4000;
+const int N = 50514;
 
 struct edge
 {
@@ -116,7 +116,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
             // create and initialize on-chip structures
             int queue[N];
             int new_queue[N];
-            tuple<int,int> neighbors[N];
+            tuple<int,int> neighbors[N/2];
             bool visited[N];
 
             for (int i = 0; i < N; i++) {
@@ -134,11 +134,10 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
                 // read neighbors
                 for (int i = 0; i < queue_size; i++) {
                     int origin = queue[i];
-                    for (auto &neighbor : graph_access[origin]) {
-                        int neighborr = neighbor;
-                        if (!visited[neighborr]){
-                            visited[neighborr] = true;
-                            neighbors[neighbors_amount] = make_tuple(origin,neighborr);
+                    for (int neighbor : graph_access[origin]) {
+                        if (!visited[neighbor]){
+                            visited[neighbor] = true;
+                            neighbors[neighbors_amount] = make_tuple(origin,neighbor);
                             neighbors_amount += 1;
                         }
                     }
@@ -244,7 +243,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
 int main()
 {
-    vector<vector<int>> graph = create_graph("./src/facebook_combined.txt");
+    vector<vector<int>> graph = create_graph("./src/artist_edges.csv");
     try {
         vector<int> parallel_result = parallel_bfs(graph);
 
