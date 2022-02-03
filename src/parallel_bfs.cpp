@@ -265,7 +265,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
 int main()
 {
-    vector<vector<int>> graph = create_graph("./src/artist_edges.csv");
+    vector<vector<int>> graph = create_graph("./src/facebook_combined.txt");
     try {
         vector<int> parallel_result = parallel_bfs(graph);
 
