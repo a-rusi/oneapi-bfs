@@ -16,7 +16,7 @@ report: parallel_bfs_report.a
 report_usm: vector-add-usm_report.a_usm
 
 parallel_bfs.fpga_emu: $(SRC)
-	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -DFPGA_EMULATOR=1
+	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -DFPGA_EMULATOR=1 -O0
 vector-add-usm.fpga_emu_usm: $(USM_SRC)
 	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -DFPGA_EMULATOR=1
 
