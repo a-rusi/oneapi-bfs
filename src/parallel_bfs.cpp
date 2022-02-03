@@ -11,7 +11,9 @@ using namespace chrono;
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <unordered_map>
 #include "sequential_bfs.h"
+
 
 const int N = 50514;
 
@@ -32,19 +34,39 @@ vector<vector<int>> create_graph(string filename)
 
     std::ifstream file;
     file.open(filename);
-    int nodes;
     int n;
     int m;
+    int latest_id = 0;
+    int node_amount = 0;
+    unordered_map<int, int> node_id_map;
 
-    file >> nodes;
     vector<edge> edges;
     while (file >> n >> m)
     {
+        if (node_id_map.find(n) != node_id_map.end()) {
+            n = node_id_map[n];
+        }
+        else {
+            n = latest_id;
+            node_id_map[n] = n;
+            latest_id++;
+            node_amount++;
+        }
+
+        if (node_id_map.find(m) != node_id_map.end()) {
+            m = node_id_map[m];
+        }
+        else {
+            m = latest_id;
+            node_id_map[m] = m;
+            latest_id++;
+            node_amount++;
+        }
         edges.push_back({n, m});
     }
     file.close();
 
-    vector<vector<int>> graph(nodes, vector<int>(0));
+    vector<vector<int>> graph(node_amount, vector<int>(0));
     for (int i = 0; i < edges.size(); i++)
     {
         int start = edges.at(i).start;
