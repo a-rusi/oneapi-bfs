@@ -11,11 +11,11 @@ using namespace chrono;
 #include <iostream>
 #include <fstream>
 #include <string>
-#include <unordered_map>
+#include <map>
 #include "sequential_bfs.h"
 
 
-const int N = 50514;
+const int N = 60514;
 
 struct edge
 {
@@ -38,33 +38,40 @@ vector<vector<int>> create_graph(string filename)
     int m;
     int latest_id = 0;
     int node_amount = 0;
-    unordered_map<int, int> node_id_map;
+    map<int, int> node_id_map;
 
     vector<edge> edges;
+    map<int, int>::iterator it;
+
     while (file >> n >> m)
     {
-        if (node_id_map.find(n) != node_id_map.end()) {
+        it = node_id_map.find(n);
+        if (it != node_id_map.end()) {
             n = node_id_map[n];
         }
         else {
+            node_id_map[n] = latest_id;
             n = latest_id;
-            node_id_map[n] = n;
             latest_id++;
             node_amount++;
         }
 
         if (node_id_map.find(m) != node_id_map.end()) {
             m = node_id_map[m];
+
         }
         else {
+            node_id_map[m] = latest_id;
             m = latest_id;
-            node_id_map[m] = m;
             latest_id++;
             node_amount++;
         }
         edges.push_back({n, m});
     }
     file.close();
+
+    std::cout << "Creating graph" << std::endl;
+    std::cout << "node amount: " << node_amount << std::endl;
 
     vector<vector<int>> graph(node_amount, vector<int>(0));
     for (int i = 0; i < edges.size(); i++)
@@ -129,10 +136,9 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
     node_visit_kernel = q.submit([&](handler &h) {
         accessor graph_access(graph_buffer, h, read_only);
-        accessor frontier_access(frontier_buffer, h);
-        accessor next_frontier_access(next_frontier_buffer, h);
         accessor finish_access(finish_vector_buffer, h, read_only);
         accessor parents_access(parent_buffer, h);
+        stream out(1024, 256, h);
 
         h.single_task([=]() [[intel::kernel_args_restrict]] {
             // create and initialize on-chip structures
@@ -157,11 +163,8 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
                 for (int i = 0; i < queue_size; i++) {
                     int origin = queue[i];
                     for (int neighbor : graph_access[origin]) {
-                        if (!visited[neighbor]){
-                            visited[neighbor] = true;
-                            neighbors[neighbors_amount] = make_tuple(origin,neighbor);
-                            neighbors_amount += 1;
-                        }
+                        neighbors[neighbors_amount] = make_tuple(origin,neighbor);
+                        neighbors_amount = neighbors_amount + 1;
                     }
                 }
                 // process neighbors
@@ -169,9 +172,12 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
                     tuple<int,int> e = neighbors[i];
                     int start = get<0>(e);
                     int end = get<1>(e);
-                    parents_access[end] = start;
-                    new_queue[new_queue_size] = end;
-                    new_queue_size += 1;
+                    if (!visited[end]) {
+                        visited[end] = true;
+                        new_queue[new_queue_size] = end;
+                        parents_access[end] = start;
+                        new_queue_size += 1;
+                    }
                 }
                 //clean slate
                 queue_size = new_queue_size;
@@ -265,11 +271,13 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
 int main()
 {
-    vector<vector<int>> graph = create_graph("./src/facebook_combined.txt");
+    vector<vector<int>> graph = create_graph("./src/artist_edges.csv");
     try {
         vector<int> parallel_result = parallel_bfs(graph);
 
         auto start = high_resolution_clock::now();
+        bool invalid_parent = false;
+        int invalid_parent_amount = 0;
 
         for (int i = 0; i < parallel_result.size(); i++)
         {
@@ -277,11 +285,17 @@ int main()
             if (parent != i && parent != -1)
             {
                 vector<int> parent_edges = graph[parent];
+
                 if (std::find(parent_edges.begin(), parent_edges.end(), i) == parent_edges.end())
                 {
-                    std::cout << "Invalid parent found!" << std::endl;
+                    invalid_parent = true;
+                    invalid_parent_amount += 1;
                 }
+
             }
+        }
+        if (invalid_parent) {
+            std::cout << "Invalid parent found! Amount:" << invalid_parent_amount << std::endl;
         }
     } catch (sycl::exception const &e) {
         // Catches exceptions in the host code
