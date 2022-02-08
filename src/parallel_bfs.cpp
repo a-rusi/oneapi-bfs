@@ -191,6 +191,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
             }
         });
     });
+    node_visit_kernel.wait();
 
     // Report kernel execution time and throughput
     t1_kernel = node_visit_kernel.get_profiling_info<sycl::info::event_profiling::command_start>();
@@ -207,9 +208,9 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
     return parent;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    vector<vector<int>> graph = create_graph("./src/artist_edges.csv");
+    vector<vector<int>> graph = create_graph(argv[1]);
     try {
         vector<int> parallel_result = parallel_bfs(graph);
         vector<int> sequential_result = sequential_bfs(graph);
