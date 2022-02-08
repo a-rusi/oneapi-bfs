@@ -141,124 +141,62 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
         stream out(1024, 256, h);
 
         h.single_task([=]() [[intel::kernel_args_restrict]] {
+            out << "Starting\n";
             // create and initialize on-chip structures
             int queue[N];
-            int new_queue[N];
-            tuple<int,int> neighbors[N/2];
+            int parent[N];
             bool visited[N];
+            bool currently_visited[N];
+            int possible_parent[N];
 
             for (int i = 0; i < N; i++) {
                 queue[i] = -1;
-                new_queue[i] = -1;
+                parent[i] = -1;
                 visited[i] = false;
+                currently_visited[i] = false;
+                possible_parent[i] = -1;
             }
+            out << "Finished Creating structs\n";
             queue[0] = source;
+            parent[source] = source;
+            visited[source] = true;
             
-            int nodes_visited = 1;
             int queue_size = 1;
-            int new_queue_size = 0;
             do {
-                int neighbors_amount = 0;
                 // read neighbors
                 for (int i = 0; i < queue_size; i++) {
                     int origin = queue[i];
                     for (int neighbor : graph_access[origin]) {
-                        neighbors[neighbors_amount] = make_tuple(origin,neighbor);
-                        neighbors_amount = neighbors_amount + 1;
+                        out << "Visiting: " << neighbor << "\n";
+                        currently_visited[neighbor] = true;
+                        possible_parent[neighbor] = origin;
                     }
                 }
-                // process neighbors
-                for (int i = 0; i < neighbors_amount; i++) {
-                    tuple<int,int> e = neighbors[i];
-                    int start = get<0>(e);
-                    int end = get<1>(e);
-                    if (!visited[end]) {
-                        visited[end] = true;
-                        new_queue[new_queue_size] = end;
-                        parents_access[end] = start;
-                        new_queue_size += 1;
-                    }
-                }
+                out << "Finished reading neighbors\n";
                 //clean slate
-                queue_size = new_queue_size;
-                new_queue_size = 0;
-                for (int i = 0; i < queue_size; i++) {
-                    queue[i] = new_queue[i];
-                    new_queue[i] = -1;
-                }
-            } while(queue_size != 0);
-        });
-    });
-
-    /*bfs_kernel = q.submit([&](handler &h) {
-        h.single_task([=]() [[intel::kernel_args_restrict]] {
-            // create queue in device
-            int nodes_visited = 1;
-            int queue_size = 1;
-            vector<int> queue(nodes, -1);
-            queue[0] = source;
-            do {
-                nodes_visited += 1;
-            } while(nodes_visited < nodes);
-        });
-    });*/
-
-    /*node_visit_kernel = q.submit([&](handler &h) {
-        accessor graph_access(graph_buffer, h, read_only);
-        accessor frontier_access(frontier_buffer, h);
-        accessor next_frontier_access(next_frontier_buffer, h);
-        accessor finish_access(finish_vector_buffer, h, read_only);
-
-        h.single_task([=]() [[intel::kernel_args_restrict]] {
-            int k = 0;
-            do
-            {
+                queue_size = 0;
                 for (int i = 0; i < nodes; i++) {
-                    if (frontier_access[i] != -1) {
-                        for (auto &neighbor : graph_access[i]) {
-                            node_paint_pipe::write(make_tuple(i, neighbor));
-                            next_frontier_access[neighbor] = 1;
-                        }
+                    if (currently_visited[i] && !visited[i]) {
+                        out << "Reading about: " << i << "\n";
+                        visited[i] = true;
+                        parent[i] = possible_parent[i];
+                        queue[queue_size] = i;
+                        queue_size++;
                     }
                 }
-                for (int i = 0; i < nodes; i++) {
-                    frontier_access[i] = next_frontier_access[i];
-                    next_frontier_access[i] = -1;
-                }
-                k++;
-            } while (k < 10);
+                out << "New queue size is: " << queue_size << "\n";
+            } while(queue_size != 0);
+            for (int i = 0; i < nodes; i++) {
+                parents_access[i] = parent[i];
+            }
         });
     });
-
-    node_paint_kernel = q.submit([&](handler &h) {
-        accessor parents_access(parent_buffer, h);
-        accessor finish_access(finish_vector_buffer, h);
-        // podria crear vector de parents aca, settear source y listo
-        // uso este para leer y el otro para escribir
-
-        h.single_task([=]() [[intel::kernel_args_restrict]] {
-            int nodes_visited = 1;
-            do
-            {
-                tuple<int,int> e = node_paint_pipe::read();
-                int start = get<0>(e);
-                int end = get<1>(e);
-                if (parents_access[end] != -1) {
-                    parents_access[end] = start;
-                    nodes_visited += 1;
-                }
-            } while (nodes_visited < nodes);
-            finish_access[0] = 1;
-        });
-    });*/
-
-    q.wait();
 
     // Report kernel execution time and throughput
-    /*t1_kernel = node_visit_kernel.get_profiling_info<sycl::info::event_profiling::command_start>();
+    t1_kernel = node_visit_kernel.get_profiling_info<sycl::info::event_profiling::command_start>();
     t2_kernel = node_visit_kernel.get_profiling_info<sycl::info::event_profiling::command_end>();
     time_kernel = (t2_kernel - t1_kernel) / NS;
-    std::cout << "Kernel execution time: " << time_kernel << " seconds" << std::endl;*/
+    std::cout << "Kernel execution time: " << time_kernel << " seconds" << std::endl;
 
     host_accessor read_parent(parent_buffer, read_only);
     for (int i = 0; i < parent.size(); i++)
@@ -274,10 +212,13 @@ int main()
     vector<vector<int>> graph = create_graph("./src/artist_edges.csv");
     try {
         vector<int> parallel_result = parallel_bfs(graph);
+        vector<int> sequential_result = sequential_bfs(graph);
 
         auto start = high_resolution_clock::now();
         bool invalid_parent = false;
+        bool invalid_unvisited = false;
         int invalid_parent_amount = 0;
+        int invalid_unvisited_amount = 0;
 
         for (int i = 0; i < parallel_result.size(); i++)
         {
@@ -293,9 +234,16 @@ int main()
                 }
 
             }
+            if (parent == -1 && sequential_result[i] != -1) {
+                invalid_unvisited = true;
+                invalid_unvisited_amount += 1;
+            }
         }
         if (invalid_parent) {
             std::cout << "Invalid parent found! Amount:" << invalid_parent_amount << std::endl;
+        }
+        if (invalid_unvisited) {
+            std::cout << "Univisted nodes!: Amount: " << invalid_unvisited_amount << std::endl;
         }
     } catch (sycl::exception const &e) {
         // Catches exceptions in the host code
