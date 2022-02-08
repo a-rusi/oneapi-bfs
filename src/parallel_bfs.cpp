@@ -162,7 +162,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
             visited[source] = true;
             
             int queue_size = 1;
-            do {
+            for (int iter = 0; iter < nodes; iter++) {
                 // read neighbors
                 for (int i = 0; i < queue_size; i++) {
                     int origin = queue[i];
@@ -185,7 +185,10 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
                     }
                 }
                 out << "New queue size is: " << queue_size << "\n";
-            } while(queue_size != 0);
+                if(queue_size == 0) {
+                    break;
+                }
+            }
             for (int i = 0; i < nodes; i++) {
                 parents_access[i] = parent[i];
             }
@@ -210,6 +213,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
 
 int main(int argc, char** argv)
 {
+    std::cout << argv[1] << std::endl;
     vector<vector<int>> graph = create_graph(argv[1]);
     try {
         vector<int> parallel_result = parallel_bfs(graph);
