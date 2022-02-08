@@ -27,7 +27,7 @@ a_usm.o: $(USM_SRC)
 	$(CXX) $(CXXFLAGS) -fintelfpga -c $^ -o $@ -DFPGA=1	
 
 parallel_bfs.fpga: a.o
-	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -Xshardware
+	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -Xshardware -Xsprofile
 vector-add-usm.fpga: a_usm.o
 	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -Xshardware
 
