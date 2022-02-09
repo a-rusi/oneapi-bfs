@@ -15,7 +15,7 @@ using namespace chrono;
 #include "sequential_bfs.h"
 
 
-const int N = 60514;
+const int N = 124599;
 
 struct edge
 {
@@ -67,6 +67,7 @@ vector<vector<int>> create_graph(string filename)
             node_amount++;
         }
         edges.push_back({n, m});
+        edges.push_back({m, n});
     }
     file.close();
 
@@ -130,7 +131,6 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
     node_visit_kernel = q.submit([&](handler &h) {
         accessor graph_access(graph_buffer, h, read_only);
         accessor parents_access(parent_buffer, h);
-        stream out(1024, 256, h);
 
         h.single_task([=]() [[intel::kernel_args_restrict]] {
             // create and initialize on-chip structures
@@ -147,6 +147,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
             }
             frontier[source] = true;
             parent[source] = source;
+            visited[source] = true;
             
             bool left_to_visit = false;
             for (int iter = 0; iter < nodes; iter++){
