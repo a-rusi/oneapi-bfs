@@ -149,7 +149,7 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
             parent[source] = source;
             
             bool left_to_visit = false;
-            do {
+            for (int iter = 0; iter < nodes; iter++){
                 // read neighbors
                 int neighbors_amount = 0;
                 left_to_visit = false;
@@ -171,21 +171,25 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
                     frontier[i] = new_frontier[i];
                     new_frontier[i] = false;
                 }
-            } while(left_to_visit);
+                if (!left_to_visit) {
+                    break;
+                }
+            };
 
             for (int i = 0; i < nodes; i++) {
                 parents_access[i] = parent[i];
             }
         });
     });
+    node_visit_kernel.wait();
 
     q.wait();
 
     // Report kernel execution time and throughput
-    /*t1_kernel = node_visit_kernel.get_profiling_info<sycl::info::event_profiling::command_start>();
+    t1_kernel = node_visit_kernel.get_profiling_info<sycl::info::event_profiling::command_start>();
     t2_kernel = node_visit_kernel.get_profiling_info<sycl::info::event_profiling::command_end>();
     time_kernel = (t2_kernel - t1_kernel) / NS;
-    std::cout << "Kernel execution time: " << time_kernel << " seconds" << std::endl;*/
+    std::cout << "Kernel execution time: " << time_kernel << " seconds" << std::endl;
 
     host_accessor read_parent(parent_buffer, read_only);
     for (int i = 0; i < parent.size(); i++)
@@ -196,9 +200,10 @@ vector<int> parallel_bfs(vector<vector<int>> &graph)
     return parent;
 }
 
-int main()
+int main(int argc, char** argv)
 {
-    vector<vector<int>> graph = create_graph("./src/facebook_combined.txt");
+    std::cout << argv[1] << std::endl;
+    vector<vector<int>> graph = create_graph(argv[1]);
     try {
         vector<int> parallel_result = parallel_bfs(graph);
 
