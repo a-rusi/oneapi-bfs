@@ -1,0 +1,121 @@
+Using CPUID GenuineIntel-6-55-7
+Compression enabled, disabling build id collection at the end of the session.
+nr_cblocks: 0
+affinity: SYS
+mmap flush: 1
+comp level: 1
+Problems creating module maps, continuing anyway...
+WARNING: Kernel address maps (/proc/{kallsyms,modules}) are restricted,
+check /proc/sys/kernel/kptr_restrict and /proc/sys/kernel/perf_event_paranoid.
+
+Samples in kernel functions may not be resolved if a suitable vmlinux
+file is not found in the buildid cache or in the vmlinux path.
+
+Samples in kernel modules won't be resolved at all.
+
+If some relocation was applied (e.g. kexec) symbols may be misresolved
+even with a suitable vmlinux or kallsyms file.
+
+mmap size 528384B
+thread 0 monitor: 0-5 allowed: any
+Couldn't record kernel reference relocation symbol
+Symbol resolution may be skewed if relocation was used (e.g. kexec).
+Check /proc/kallsyms permission or run as root.
+couldn't open /proc/1/task/1/maps
+couldn't open /proc/1019/task/1019/maps
+couldn't open /proc/1029/task/1029/maps
+couldn't open /proc/1167/task/1167/maps
+couldn't open /proc/11739/task/11739/maps
+couldn't open /proc/11819/task/11819/maps
+couldn't open /proc/11977/task/11977/maps
+couldn't open /proc/14621/task/14621/maps
+couldn't open /proc/15566/task/15566/maps
+couldn't open /proc/15827/task/15827/maps
+couldn't open /proc/15994/task/15994/maps
+couldn't open /proc/16657/task/16657/maps
+couldn't open /proc/16723/task/16723/maps
+couldn't open /proc/16724/task/16724/maps
+couldn't open /proc/16732/task/16732/maps
+couldn't open /proc/1973/task/1973/maps
+couldn't open /proc/1975/task/1975/maps
+couldn't open /proc/1996/task/1996/maps
+couldn't open /proc/2004/task/2004/maps
+couldn't open /proc/2035/task/2035/maps
+couldn't open /proc/2058/task/2058/maps
+couldn't open /proc/2072/task/2072/maps
+couldn't open /proc/2102/task/2102/maps
+couldn't open /proc/2116/task/2116/maps
+couldn't open /proc/2127/task/2127/maps
+couldn't open /proc/21486/task/21486/maps
+couldn't open /proc/21487/task/21487/maps
+couldn't open /proc/2171/task/2171/maps
+couldn't open /proc/2173/task/2173/maps
+couldn't open /proc/2176/task/2176/maps
+couldn't open /proc/2183/task/2183/maps
+couldn't open /proc/2190/task/2190/maps
+couldn't open /proc/22042/task/22042/maps
+couldn't open /proc/2486/task/2486/maps
+couldn't open /proc/2505/task/2505/maps
+couldn't open /proc/2510/task/2510/maps
+couldn't open /proc/2512/task/2512/maps
+couldn't open /proc/2516/task/2516/maps
+couldn't open /proc/2517/task/2517/maps
+couldn't open /proc/2563/task/2563/maps
+couldn't open /proc/2566/task/2566/maps
+couldn't open /proc/2569/task/2569/maps
+couldn't open /proc/2571/task/2571/maps
+couldn't open /proc/2579/task/2579/maps
+couldn't open /proc/25906/task/25906/maps
+couldn't open /proc/2594/task/2594/maps
+couldn't open /proc/2601/task/2601/maps
+couldn't open /proc/2611/task/2611/maps
+couldn't open /proc/2616/task/2616/maps
+couldn't open /proc/2620/task/2620/maps
+couldn't open /proc/2624/task/2624/maps
+couldn't open /proc/2627/task/2627/maps
+couldn't open /proc/2628/task/2628/maps
+couldn't open /proc/2629/task/2629/maps
+couldn't open /proc/2632/task/2632/maps
+couldn't open /proc/26367/task/26367/maps
+couldn't open /proc/26370/task/26370/maps
+couldn't open /proc/2640/task/2640/maps
+couldn't open /proc/2643/task/2643/maps
+couldn't open /proc/2645/task/2645/maps
+couldn't open /proc/2647/task/2647/maps
+couldn't open /proc/2648/task/2648/maps
+couldn't open /proc/2653/task/2653/maps
+couldn't open /proc/2657/task/2657/maps
+couldn't open /proc/2660/task/2660/maps
+couldn't open /proc/2662/task/2662/maps
+couldn't open /proc/2673/task/2673/maps
+couldn't open /proc/27475/task/27475/maps
+couldn't open /proc/2802/task/2802/maps
+couldn't open /proc/2803/task/2803/maps
+couldn't open /proc/2980/task/2980/maps
+couldn't open /proc/317/task/317/maps
+couldn't open /proc/327/task/327/maps
+couldn't open /proc/32704/task/32704/maps
+couldn't open /proc/384/task/384/maps
+couldn't open /proc/844/task/844/maps
+couldn't open /proc/845/task/845/maps
+couldn't open /proc/852/task/852/maps
+couldn't open /proc/853/task/853/maps
+couldn't open /proc/858/task/858/maps
+couldn't open /proc/860/task/860/maps
+couldn't open /proc/863/task/863/maps
+couldn't open /proc/866/task/866/maps
+couldn't open /proc/868/task/868/maps
+couldn't open /proc/873/task/873/maps
+couldn't open /proc/893/task/893/maps
+couldn't open /proc/897/task/897/maps
+couldn't open /proc/900/task/900/maps
+couldn't open /proc/903/task/903/maps
+couldn't open /proc/907/task/907/maps
+couldn't open /proc/912/task/912/maps
+couldn't open /proc/927/task/927/maps
+couldn't open /proc/940/task/940/maps
+cmd_pipe: /tmp/amplxe-tmp-alejandror/perf-pipe-2118-18523404176550252
+
+2137:perf-sync:ready:TSC=18523404595299040
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.142 MB /home/alejandror/oneapi-bfs/r002fi/data.0/temp.dryrun.perf, compressed (original 0.009 MB, ratio is 5.186) ]

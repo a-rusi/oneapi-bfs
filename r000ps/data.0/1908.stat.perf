@@ -1,0 +1,98 @@
+# AMPLXE_PERF_STAT
+# hostname : macizo
+# os release : 5.4.0-84-generic
+# arch : x86_64
+# cpuid : GenuineIntel,6,85,7
+# cpudesc : Intel(R) Xeon(R) Bronze 3204 CPU @ 1.90GHz
+# total memory : 98521552 kB
+# nrcpus online : 6
+# nrcpus avail : 6
+# sibling cores : 0-5
+# sibling threads : 0
+# sibling threads : 1
+# sibling threads : 2
+# sibling threads : 3
+# sibling threads : 4
+# sibling threads : 5
+# process id : 1908
+;;595297590;0
+;;648286764;1
+;;574963834;2
+;;211563941;3
+;;468909;4
+;;505;5
+;;42;6
+;;253;7
+;;7534427;8
+;;2112680;9
+;;1681567;10
+;;16785;11
+;;257171922;12
+;;104921728;13
+;;192813;14
+;;0;15
+;;0;16
+;;0;17
+;;0;18
+;;0;19
+;;3901162;20
+;;0;21
+;;8550474;22
+;;8551212;23
+;;652776989;24
+;;0;25
+;;0;26
+;;0;27
+;;38;28
+;;0;29
+;;0;30
+;;35461;31
+;;636564360;32
+;;0;33
+;;0;34
+;;99754473;35
+;;96826902;36
+;;97019078;37
+;;74042609;38
+;;72874644;39
+;;46920233;40
+;;15058821;41
+;;200932211;42
+;;9346289;43
+;;573280597;44
+;;122680452;45
+;;274846181;46
+;;119204477;47
+;;184161758;48
+;;<not supported>;49
+;;<not supported>;50
+;;<not supported>;51
+;;<not supported>;52
+;;<not supported>;53
+;;<not supported>;54
+;;<not supported>;55
+;;<not supported>;56
+;;<not supported>;57
+;;<not supported>;58
+;;<not supported>;59
+;;<not supported>;60
+;;<not supported>;61
+;;<not supported>;62
+;;<not supported>;63
+;;<not supported>;64
+;;<not supported>;65
+;;<not supported>;66
+;;<not supported>;67
+;;<not supported>;68
+;;<not supported>;69
+;;<not supported>;70
+;;<not supported>;71
+;;<not supported>;72
+;;<not supported>;73
+;;<not supported>;74
+;;<not supported>;75
+;;<not supported>;76
+;;<not supported>;77
+;;<not supported>;78
+;;<not supported>;79
+;;<not supported>;80
