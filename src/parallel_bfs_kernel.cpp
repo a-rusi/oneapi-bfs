@@ -46,10 +46,8 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
     bfs_kernel = q.submit([&](handler &h) {
         accessor graph_access(graph_buffer, h, read_only);
         accessor parents_access(parent_buffer, h);
-        stream out(1024, 256, h);
 
         h.single_task([=]() [[intel::kernel_args_restrict]] {
-            out << "Starting\n";
             // create and initialize on-chip structures
             int queue[N];
             int parent[N];
@@ -64,7 +62,6 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
                 currently_visited[i] = false;
                 possible_parent[i] = -1;
             }
-            out << "Finished Creating structs\n";
             queue[0] = source;
             parent[source] = source;
             visited[source] = true;
@@ -75,24 +72,20 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
                 for (int i = 0; i < queue_size; i++) {
                     int origin = queue[i];
                     for (int neighbor : graph_access[origin]) {
-                        out << "Visiting: " << neighbor << "\n";
                         currently_visited[neighbor] = true;
                         possible_parent[neighbor] = origin;
                     }
                 }
-                out << "Finished reading neighbors\n";
                 //clean slate
                 queue_size = 0;
                 for (int i = 0; i < nodes; i++) {
                     if (currently_visited[i] && !visited[i]) {
-                        out << "Reading about: " << i << "\n";
                         visited[i] = true;
                         parent[i] = possible_parent[i];
                         queue[queue_size] = i;
                         queue_size++;
                     }
                 }
-                out << "New queue size is: " << queue_size << "\n";
             }
             for (int i = 0; i < nodes; i++) {
                 parents_access[i] = parent[i];
