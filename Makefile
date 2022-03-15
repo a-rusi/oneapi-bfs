@@ -15,8 +15,8 @@ hw_usm: vector-add-usm.fpga
 report: parallel_bfs_report.a
 report_usm: vector-add-usm_report.a_usm
 
-parallel_bfs.fpga_emu: $(SRC)
-	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -DFPGA_EMULATOR=1 -O0
+parallel_bfs.fpga_emu:
+	dpcpp -fintelfpga -DFPGA_EMULATOR src/host.cpp src/parallel_bfs_kernel.cpp -o emu_parallel -O0
 vector-add-usm.fpga_emu_usm: $(USM_SRC)
 	$(CXX) $(CXXFLAGS) -fintelfpga $^ -o $@ -DFPGA_EMULATOR=1
 
@@ -49,8 +49,9 @@ dev_usm.o: $(USM_SRC)
 
 
 
-parallel_bfs_report.a: dev.o
-	$(CXX) $(CXXFLAGS) -fintelfpga -fsycl-link $^ -o $@ -Xshardware
+parallel_bfs_report.a:
+	dpcpp -fintelfpga -fsycl-link -Xshardware src/host.cpp src/parallel_bfs_kernel.cpp -o report.a
+
 vector-add-usm_report.a_usm: dev_usm.o
 	$(CXX) $(CXXFLAGS) -fintelfpga -fsycl-link $^ -o $@ -Xshardware
 

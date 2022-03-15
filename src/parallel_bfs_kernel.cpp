@@ -45,7 +45,6 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
     std::cout << "Starting BFS" << std::endl;
     bfs_kernel = q.submit([&](handler &h) {
         accessor graph_access(graph_buffer, h, read_only);
-        accessor finish_access(finish_vector_buffer, h, read_only);
         accessor parents_access(parent_buffer, h);
         stream out(1024, 256, h);
 
@@ -71,7 +70,7 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
             visited[source] = true;
             
             int queue_size = 1;
-            for (int iter = 0; iter < nodes; iter++) {
+            for (int iter = 0; iter < nodes && queue_size != 0; iter++) {
                 // read neighbors
                 for (int i = 0; i < queue_size; i++) {
                     int origin = queue[i];
@@ -94,9 +93,6 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
                     }
                 }
                 out << "New queue size is: " << queue_size << "\n";
-                if(queue_size == 0) {
-                    break;
-                }
             }
             for (int i = 0; i < nodes; i++) {
                 parents_access[i] = parent[i];
