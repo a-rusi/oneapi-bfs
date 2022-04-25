@@ -68,8 +68,12 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
             
             int queue_size = 1;
             int iter = 0;
+            int amount = 0;
             while (iter < nodes) {
-                parents_access[iter] = iter;
+                for (int i = queue_size; i < nodes; i++) {
+                    parents_access[i] = queue_size;
+                }
+                queue_size++;
                 iter++;
             }
         });
