@@ -76,6 +76,11 @@ vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
                 queue_size++;
                 iter++;
             }
+            int accum = 0;
+            for (int i = 0; i < nodes; i++) {
+                parents_access[i] = parent[i] + accum;
+                accum++;
+            }
         });
     });
     bfs_kernel.wait();
