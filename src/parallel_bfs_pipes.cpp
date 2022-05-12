@@ -27,7 +27,7 @@ const int N = 124599;
 
 class BFSKernel;
 
-vector<int> parallel_bfs(sycl::queue& q, vector<vector<int>>& graph, int source)
+vector<int> parallel_bfs_pipes(sycl::queue& q, vector<vector<int>>& graph, int source)
 
 {
     //simple graph init

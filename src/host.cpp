@@ -10,6 +10,8 @@ using namespace chrono;
 
 #include "sequential_bfs.h"
 #include "parallel_bfs_kernel.hpp"
+#include "parallel_bfs_pipes.hpp"
+
 
 struct edge
 {
@@ -96,7 +98,7 @@ int main(int argc, char** argv)
         std::cout << "Device name: " << my_device.get_info<sycl::info::device::name>().c_str() << std::endl;
 
 
-        vector<int> parallel_result = parallel_bfs(q, graph, 0);
+        vector<int> parallel_result = parallel_bfs_pipes(q, graph, 0);
 
         bool invalid_parent = false;
         int invalid_parent_amount = 0;
