@@ -11,6 +11,8 @@ using namespace chrono;
 #include "sequential_bfs.h"
 #include "parallel_bfs_kernel.hpp"
 #include "parallel_bfs_pipes.hpp"
+#include "csr.cpp"
+
 
 
 struct edge
@@ -80,6 +82,13 @@ int main(int argc, char** argv)
     // Create graph from input filename
     std::cout << argv[1] << std::endl;
     vector<vector<int>> graph = create_graph(argv[1]);
+    CSR csr;
+    csr.from_graph(graph, graph.size());
+
+    vector<int> begin_position = csr.begin_position;
+    for (int i = 0; i < begin_position.size(); i++) {
+        std::cout << begin_position[i] << std::endl;
+    }
 
     // Try to run kernel code
     try {

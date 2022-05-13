@@ -55,6 +55,7 @@ vector<int> parallel_bfs_pipes(sycl::queue& q, vector<vector<int>>& graph, int s
     queue q2;
     visit_kernel = q.submit([&](handler &h) {
         accessor graph_access(graph_buffer, h, read_only);
+        stream out(1024, 256, h);
         h.single_task([=]() [[intel::kernel_args_restrict]] {
             bool frontier[N];
             bool new_frontier[N];
@@ -89,12 +90,15 @@ vector<int> parallel_bfs_pipes(sycl::queue& q, vector<vector<int>>& graph, int s
                         new_frontier[i] = false;
                     }
                 }
+                out << "Visiter: Currently procesed nodes: " << nodes_processed << "\n";
+                out << "Visiter: Starting new iteration" << "\n";
             } while (nodes_processed < nodes);
         });
     });
 
     compute_kernel = q.submit([&](handler &h) {
         accessor parents_access(parent_buffer, h);
+        stream out(1024, 256, h);
 
         h.single_task([=]() [[intel::kernel_args_restrict]] {
             bool visited[N];
@@ -102,6 +106,7 @@ vector<int> parallel_bfs_pipes(sycl::queue& q, vector<vector<int>>& graph, int s
                 visited[i] = false;
             }
             int nodes_computed = 1;
+            out << "Compute: starting to read nodes" << "\n";
 
             do {
                 parent_child_nodes p = node_pipe::read();
