@@ -9,8 +9,7 @@ using namespace chrono;
 
 
 #include "sequential_bfs.h"
-#include "parallel_bfs_kernel.hpp"
-#include "parallel_bfs_pipes.hpp"
+#include "parallel_bfs_frontier.hpp"
 #include "csr.cpp"
 
 
@@ -82,13 +81,13 @@ int main(int argc, char** argv)
     // Create graph from input filename
     std::cout << argv[1] << std::endl;
     vector<vector<int>> graph = create_graph(argv[1]);
-    CSR csr;
+    /*CSR csr;
     csr.from_graph(graph, graph.size());
 
     vector<int> begin_position = csr.begin_position;
     for (int i = 0; i < begin_position.size(); i++) {
         std::cout << begin_position[i] << std::endl;
-    }
+    }*/
 
     // Try to run kernel code
     try {
@@ -107,7 +106,7 @@ int main(int argc, char** argv)
         std::cout << "Device name: " << my_device.get_info<sycl::info::device::name>().c_str() << std::endl;
 
 
-        vector<int> parallel_result = parallel_bfs_pipes(q, graph, 0);
+        vector<int> parallel_result = parallel_bfs_frontier(q, graph, 0);
 
         bool invalid_parent = false;
         int invalid_parent_amount = 0;
