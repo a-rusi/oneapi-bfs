@@ -1,0 +1,257 @@
+Using CPUID GenuineIntel-6-55-7
+Compression enabled, disabling build id collection at the end of the session.
+nr_cblocks: 0
+affinity: SYS
+mmap flush: 1
+comp level: 1
+Problems creating module maps, continuing anyway...
+WARNING: Kernel address maps (/proc/{kallsyms,modules}) are restricted,
+check /proc/sys/kernel/kptr_restrict and /proc/sys/kernel/perf_event_paranoid.
+
+Samples in kernel functions may not be resolved if a suitable vmlinux
+file is not found in the buildid cache or in the vmlinux path.
+
+Samples in kernel modules won't be resolved at all.
+
+If some relocation was applied (e.g. kexec) symbols may be misresolved
+even with a suitable vmlinux or kallsyms file.
+
+mmap size 528384B
+thread 0 monitor: 0-5 allowed: any
+Couldn't record kernel reference relocation symbol
+Symbol resolution may be skewed if relocation was used (e.g. kexec).
+Check /proc/kallsyms permission or run as root.
+couldn't open /proc/1/task/1/maps
+couldn't open /proc/10099/task/10099/maps
+couldn't open /proc/1013/task/1013/maps
+couldn't open /proc/10173/task/10173/maps
+couldn't open /proc/10203/task/10203/maps
+couldn't open /proc/10212/task/10212/maps
+couldn't open /proc/1077/task/1077/maps
+couldn't open /proc/10979/task/10979/maps
+couldn't open /proc/11107/task/11107/maps
+couldn't open /proc/11579/task/11579/maps
+couldn't open /proc/11607/task/11607/maps
+couldn't open /proc/11939/task/11939/maps
+couldn't open /proc/12115/task/12115/maps
+couldn't open /proc/12135/task/12135/maps
+couldn't open /proc/12483/task/12483/maps
+couldn't open /proc/13256/task/13256/maps
+couldn't open /proc/13281/task/13281/maps
+couldn't open /proc/13282/task/13282/maps
+couldn't open /proc/13585/task/13585/maps
+couldn't open /proc/13706/task/13706/maps
+couldn't open /proc/14042/task/14042/maps
+couldn't open /proc/14043/task/14043/maps
+couldn't open /proc/14059/task/14059/maps
+couldn't open /proc/14130/task/14130/maps
+couldn't open /proc/14334/task/14334/maps
+couldn't open /proc/14671/task/14671/maps
+couldn't open /proc/14783/task/14783/maps
+couldn't open /proc/1481/task/1481/maps
+couldn't open /proc/14891/task/14891/maps
+couldn't open /proc/1501/task/1501/maps
+couldn't open /proc/15157/task/15157/maps
+couldn't open /proc/1519/task/1519/maps
+couldn't open /proc/15191/task/15191/maps
+couldn't open /proc/1522/task/1522/maps
+couldn't open /proc/15243/task/15243/maps
+couldn't open /proc/1538/task/1538/maps
+couldn't open /proc/15413/task/15413/maps
+couldn't open /proc/15454/task/15454/maps
+couldn't open /proc/15552/task/15552/maps
+couldn't open /proc/1559/task/1559/maps
+couldn't open /proc/1583/task/1583/maps
+couldn't open /proc/15893/task/15893/maps
+couldn't open /proc/15974/task/15974/maps
+couldn't open /proc/16013/task/16013/maps
+couldn't open /proc/1616/task/1616/maps
+couldn't open /proc/1625/task/1625/maps
+couldn't open /proc/1632/task/1632/maps
+couldn't open /proc/16404/task/16404/maps
+couldn't open /proc/16429/task/16429/maps
+couldn't open /proc/16705/task/16705/maps
+couldn't open /proc/1688/task/1688/maps
+couldn't open /proc/1689/task/1689/maps
+couldn't open /proc/1691/task/1691/maps
+couldn't open /proc/1693/task/1693/maps
+couldn't open /proc/1701/task/1701/maps
+couldn't open /proc/17011/task/17011/maps
+couldn't open /proc/1708/task/1708/maps
+couldn't open /proc/17340/task/17340/maps
+couldn't open /proc/17557/task/17557/maps
+couldn't open /proc/17685/task/17685/maps
+couldn't open /proc/18268/task/18268/maps
+couldn't open /proc/1835/task/1835/maps
+couldn't open /proc/1860/task/1860/maps
+couldn't open /proc/18605/task/18605/maps
+couldn't open /proc/18740/task/18740/maps
+couldn't open /proc/18756/task/18756/maps
+couldn't open /proc/1886/task/1886/maps
+couldn't open /proc/18945/task/18945/maps
+couldn't open /proc/18948/task/18948/maps
+couldn't open /proc/19060/task/19060/maps
+couldn't open /proc/19253/task/19253/maps
+couldn't open /proc/1929/task/1929/maps
+couldn't open /proc/19545/task/19545/maps
+couldn't open /proc/19664/task/19664/maps
+couldn't open /proc/19724/task/19724/maps
+couldn't open /proc/19725/task/19725/maps
+couldn't open /proc/19843/task/19843/maps
+couldn't open /proc/19989/task/19989/maps
+couldn't open /proc/2033/task/2033/maps
+couldn't open /proc/2038/task/2038/maps
+couldn't open /proc/2040/task/2040/maps
+couldn't open /proc/2044/task/2044/maps
+couldn't open /proc/2045/task/2045/maps
+couldn't open /proc/20474/task/20474/maps
+couldn't open /proc/20545/task/20545/maps
+couldn't open /proc/21271/task/21271/maps
+couldn't open /proc/21907/task/21907/maps
+couldn't open /proc/2227/task/2227/maps
+couldn't open /proc/2236/task/2236/maps
+couldn't open /proc/2238/task/2238/maps
+couldn't open /proc/2259/task/2259/maps
+couldn't open /proc/2268/task/2268/maps
+couldn't open /proc/22740/task/22740/maps
+couldn't open /proc/2289/task/2289/maps
+couldn't open /proc/2296/task/2296/maps
+couldn't open /proc/2297/task/2297/maps
+couldn't open /proc/2301/task/2301/maps
+couldn't open /proc/2302/task/2302/maps
+couldn't open /proc/2303/task/2303/maps
+couldn't open /proc/23086/task/23086/maps
+couldn't open /proc/2310/task/2310/maps
+couldn't open /proc/2314/task/2314/maps
+couldn't open /proc/23141/task/23141/maps
+couldn't open /proc/23155/task/23155/maps
+couldn't open /proc/2317/task/2317/maps
+couldn't open /proc/2318/task/2318/maps
+couldn't open /proc/23185/task/23185/maps
+couldn't open /proc/23186/task/23186/maps
+couldn't open /proc/23206/task/23206/maps
+couldn't open /proc/2321/task/2321/maps
+couldn't open /proc/23217/task/23217/maps
+couldn't open /proc/2322/task/2322/maps
+couldn't open /proc/2323/task/2323/maps
+couldn't open /proc/2324/task/2324/maps
+couldn't open /proc/2332/task/2332/maps
+couldn't open /proc/2333/task/2333/maps
+couldn't open /proc/2339/task/2339/maps
+couldn't open /proc/23560/task/23560/maps
+couldn't open /proc/23597/task/23597/maps
+couldn't open /proc/23907/task/23907/maps
+couldn't open /proc/24017/task/24017/maps
+couldn't open /proc/24024/task/24024/maps
+couldn't open /proc/24386/task/24386/maps
+couldn't open /proc/24387/task/24387/maps
+couldn't open /proc/24388/task/24388/maps
+couldn't open /proc/24879/task/24879/maps
+couldn't open /proc/2489/task/2489/maps
+couldn't open /proc/24907/task/24907/maps
+couldn't open /proc/24942/task/24942/maps
+couldn't open /proc/25011/task/25011/maps
+couldn't open /proc/25149/task/25149/maps
+couldn't open /proc/25228/task/25228/maps
+couldn't open /proc/25233/task/25233/maps
+couldn't open /proc/25234/task/25234/maps
+couldn't open /proc/25307/task/25307/maps
+couldn't open /proc/25567/task/25567/maps
+couldn't open /proc/25634/task/25634/maps
+couldn't open /proc/25721/task/25721/maps
+couldn't open /proc/25746/task/25746/maps
+couldn't open /proc/25786/task/25786/maps
+couldn't open /proc/25827/task/25827/maps
+couldn't open /proc/25851/task/25851/maps
+couldn't open /proc/25892/task/25892/maps
+couldn't open /proc/26216/task/26216/maps
+couldn't open /proc/26219/task/26219/maps
+couldn't open /proc/26348/task/26348/maps
+couldn't open /proc/26438/task/26438/maps
+couldn't open /proc/26463/task/26463/maps
+couldn't open /proc/26716/task/26716/maps
+couldn't open /proc/2678/task/2678/maps
+couldn't open /proc/26867/task/26867/maps
+couldn't open /proc/2688/task/2688/maps
+couldn't open /proc/26992/task/26992/maps
+couldn't open /proc/27011/task/27011/maps
+couldn't open /proc/27175/task/27175/maps
+couldn't open /proc/2767/task/2767/maps
+couldn't open /proc/27671/task/27671/maps
+couldn't open /proc/2777/task/2777/maps
+couldn't open /proc/27818/task/27818/maps
+couldn't open /proc/28432/task/28432/maps
+couldn't open /proc/29365/task/29365/maps
+couldn't open /proc/29894/task/29894/maps
+couldn't open /proc/303/task/303/maps
+couldn't open /proc/30722/task/30722/maps
+couldn't open /proc/31035/task/31035/maps
+couldn't open /proc/31216/task/31216/maps
+couldn't open /proc/31310/task/31310/maps
+couldn't open /proc/31472/task/31472/maps
+couldn't open /proc/320/task/320/maps
+couldn't open /proc/32199/task/32199/maps
+couldn't open /proc/32290/task/32290/maps
+couldn't open /proc/32384/task/32384/maps
+couldn't open /proc/32530/task/32530/maps
+couldn't open /proc/3344/task/3344/maps
+couldn't open /proc/336/task/336/maps
+couldn't open /proc/3931/task/3931/maps
+couldn't open /proc/4522/task/4522/maps
+couldn't open /proc/4727/task/4727/maps
+couldn't open /proc/5199/task/5199/maps
+couldn't open /proc/5225/task/5225/maps
+couldn't open /proc/5242/task/5242/maps
+couldn't open /proc/5248/task/5248/maps
+couldn't open /proc/5276/task/5276/maps
+couldn't open /proc/5490/task/5490/maps
+couldn't open /proc/5889/task/5889/maps
+couldn't open /proc/6183/task/6183/maps
+couldn't open /proc/6344/task/6344/maps
+couldn't open /proc/6367/task/6367/maps
+couldn't open /proc/647/task/647/maps
+couldn't open /proc/6620/task/6620/maps
+couldn't open /proc/663/task/663/maps
+couldn't open /proc/6648/task/6648/maps
+couldn't open /proc/666/task/666/maps
+couldn't open /proc/6712/task/6712/maps
+couldn't open /proc/6835/task/6835/maps
+couldn't open /proc/6890/task/6890/maps
+couldn't open /proc/7140/task/7140/maps
+couldn't open /proc/7569/task/7569/maps
+couldn't open /proc/8027/task/8027/maps
+couldn't open /proc/8058/task/8058/maps
+couldn't open /proc/8061/task/8061/maps
+couldn't open /proc/8100/task/8100/maps
+couldn't open /proc/8139/task/8139/maps
+couldn't open /proc/821/task/821/maps
+couldn't open /proc/824/task/824/maps
+couldn't open /proc/825/task/825/maps
+couldn't open /proc/848/task/848/maps
+couldn't open /proc/855/task/855/maps
+couldn't open /proc/857/task/857/maps
+couldn't open /proc/858/task/858/maps
+couldn't open /proc/865/task/865/maps
+couldn't open /proc/866/task/866/maps
+couldn't open /proc/868/task/868/maps
+couldn't open /proc/8695/task/8695/maps
+couldn't open /proc/870/task/870/maps
+couldn't open /proc/879/task/879/maps
+couldn't open /proc/885/task/885/maps
+couldn't open /proc/8875/task/8875/maps
+couldn't open /proc/891/task/891/maps
+couldn't open /proc/908/task/908/maps
+couldn't open /proc/9293/task/9293/maps
+couldn't open /proc/9298/task/9298/maps
+couldn't open /proc/9300/task/9300/maps
+couldn't open /proc/9375/task/9375/maps
+couldn't open /proc/9406/task/9406/maps
+couldn't open /proc/941/task/941/maps
+couldn't open /proc/943/task/943/maps
+couldn't open /proc/950/task/950/maps
+couldn't open /proc/951/task/951/maps
+cmd_pipe: /tmp/amplxe-tmp-alejandror/perf-pipe-20439-16841059472308518
+
+20450:perf-sync:ready:TSC=16841059899323604
+[ perf record: Woken up 1 times to write data ]
+[ perf record: Captured and wrote 0.084 MB /home/alejandror/oneapi-bfs/r003fi/data.0/temp.dryrun.perf, compressed (original 0.003 MB, ratio is 3.227) ]
