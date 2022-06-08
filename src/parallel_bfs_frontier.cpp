@@ -46,6 +46,7 @@ vector<int> parallel_bfs_frontier(sycl::queue& q, vector<vector<int>>& graph, in
     bfs_kernel = q.submit([&](handler &h) {
         accessor graph_access(graph_buffer, h, read_only);
         accessor parents_access(parent_buffer, h);
+        stream out(1024, 256, h);
 
         h.single_task([=]() [[intel::kernel_args_restrict]] {
             // create and initialize on-chip structures
@@ -71,19 +72,26 @@ vector<int> parallel_bfs_frontier(sycl::queue& q, vector<vector<int>>& graph, in
                 left_to_visit = false;
                 for (int i = 0; i < nodes; i++) {
                     if (frontier[i]) {
+                        out << "Node: i " << "was in frontier\n";
+                        int local_neighbors[N];
+                        int neighbor_amount = 0;
                         for (int neighbor : graph_access[i]) {
-                            if (!visited[neighbor]) {
-                                visited[neighbor] = true;
-                                new_frontier[neighbor] = true;
-                                parents_access[neighbor] = i;
-                                left_to_visit = true;
-                            }
+                            out << "Neighbor: " << "neighbor visited\n";
+                            local_neighbors[neighbor_amount] = neighbor;
+                            neighbor_amount++;
+                        }
+                        for (int j = 0; j < neighbor_amount; j++) {
+                            int neighbor = local_neighbors[j];
+                            new_frontier[neighbor] = true;
+                            parents_access[neighbor] = visited[neighbor] ? parent[neighbor] : (frontier[i] ? i : parent[neighbor]);
+                            visited[i] = visited[i] || frontier[i];
                         }
                     }
                 }
 
                 //clean slate
                 for (int i = 0; i < nodes; i++) {
+                    left_to_visit = left_to_visit || new_frontier[i];
                     frontier[i] = new_frontier[i];
                     new_frontier[i] = false;
                 }
